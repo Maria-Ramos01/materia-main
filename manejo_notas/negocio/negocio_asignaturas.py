@@ -58,15 +58,45 @@ def agregar_asignatura():
     if codigo_asignatura and nombre_asignatura != '':
         insertar_datos(consulta,valores)
 
+def editar_asignatura():
+    mostrar_listado_asignaturas()
+    id_asignatura = input('Ingrese ID de la asignatura a editar: ')
+    nuevo_codigo = input('Ingrese el nuevo código asignatura: ')
+    nuevo_nombre = input('Ingrese el nuevo nombre asignatura: ')
+    nueva_descripcion = input('Ingrese la nueva descripción asignatura: ')
+    consulta = '''
+        UPDATE asignaturas 
+        SET codigo_asignatura = %s,
+            nombre_asignatura = %s,
+            descripcion_asignatura = %s
+        WHERE id = %s
+    '''
+    valores = (
+        nuevo_codigo.upper(),
+        nuevo_nombre.title(),
+        nueva_descripcion,
+        id_asignatura
+        )
+    
+    if id_asignatura and nuevo_codigo and nuevo_nombre != '':
+        insertar_datos(consulta, valores)
+        print('Asignatura actualizada correctamente.')
+    else:
+        print('Datos inválidos. No se realizó la actualización.')
+    
+
+def eliminar_asignatura():
+    mostrar_listado_asignaturas()
+    id_asignatura = input('Ingrese ID de la asignatura a eliminar: ')
+    consulta = '''
+        DELETE FROM asignaturas WHERE id = %s
+    '''
+    valores = (id_asignatura,)
+    if id_asignatura != '':
+        insertar_datos(consulta, valores)
+        print('Asignatura eliminada correctamente.')
+    else:
+        print('ID inválido. No se realizó la eliminación.')
+
     mostrar_listado_asignaturas()
 
-# # UPDATE  
-# def actualizar_asignatura():
-#     mostrar_listado_asignaturas()
-#     busqueda = input('Ingrese asignatura a buscar: ')
-#     indice = indice_asignatura(busqueda)
-#     # nuevo_dato = input(f'Ingrese nuevo nombre para asignatura {asignaturas[indice]}: ')
-#     # asignaturas[indice] = nuevo_dato
-
-#     crear_data('asignaturas.py','asignaturas',asignaturas)
-#     mostrar_listado_asignaturas()
